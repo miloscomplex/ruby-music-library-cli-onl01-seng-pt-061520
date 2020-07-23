@@ -1,6 +1,8 @@
 class Artist
 
-  attr_accessor :name, :genres, :artist
+  extend Concerns::Findable
+
+  attr_accessor :name, :genre, :artist
 
   @@all = []
 
@@ -11,15 +13,15 @@ class Artist
   end
 
   def add_song(new_song, song_artist=nil)
-    # binding.pry
     if !new_song.artist
       new_song.artist = self
-    elsif !Song.all.detect {|song| song == new_song }
-      new_song = Song.new(new_song, self, new_song.genre)
-      self.songs << new_song
-    elsif !!new_song.artist && !Song.all.detect {|song| song == new_song }
-      new_song = Song.new(new_song, new_song.artist, new_song.genre)
-      self.songs << new_song
+    # elsif !Song.all.detect {|song| song == new_song }
+    #   song = Song.new(new_song, self, new_song.genre)
+    #   self.songs << song
+    # elsif !!new_song.artist && !Song.all.detect {|song| song == new_song }
+    #   song = Song.new(new_song, new_song.artist, new_song.genre)
+    #   self.songs << song
+    # end
     end
   end
 
@@ -29,7 +31,18 @@ class Artist
 
   def songs
     # binding.pry
-    Song.all.each {|song| song.artist == self}
+    Song.all.each {|song| song.artist == self }
+  end
+
+  def genres
+    genre_array = []
+    Song.all.each  do |song|
+      # binding.pry
+      if song.artist == self
+        genre_array << song.genre
+      end
+    end
+    genre_array.uniq
   end
 
   def save

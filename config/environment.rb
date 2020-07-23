@@ -1,3 +1,5 @@
+require_relative '../lib/concerns/concerns'
+
 require 'bundler'
 Bundler.require
 
