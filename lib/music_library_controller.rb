@@ -72,13 +72,40 @@ class MusicLibraryController
 
   def play_song
     puts "Which song number would you like to play?"
-    # list_songs
     input = gets.strip
-    if input.to_i > 1 && input.to_i <= Song.all.count
+    if input.to_i >= 1 && input.to_i <= Song.all.count
       i = input.to_i - 1
       song_obj = Song.all.sort_by {|obj| obj.name}
-      binding.pry
       puts "Playing #{song_obj[i].name} by #{song_obj[i].artist.name}"
+    end
+  end
+
+  def call
+    puts "Welcome to your music library!"
+    puts "To list all of your songs, enter 'list songs'."
+    puts "To list all of the artists in your library, enter 'list artists'."
+    puts "To list all of the genres in your library, enter 'list genres'."
+    puts "To list all of the songs by a particular artist, enter 'list artist'."
+    puts "To list all of the songs of a particular genre, enter 'list genre'."
+    puts "To play a song, enter 'play song'."
+    puts "To quit, type 'exit'."
+    
+    user_input = gets.chomp
+
+    if user_input == "list songs"
+      list_songs
+    elsif user_input == "list artists"
+      list_artists
+    elsif user_input == "list genres"
+      list_genres
+    elsif user_input == "list artist"
+      list_songs_by_artist
+    elsif user_input == "list genre"
+      list_songs_by_genre
+    elsif user_input == "play song"
+      play_song
+    elsif user_input == "exit"
+      exit
     end
   end
 
